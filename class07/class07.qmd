@@ -1,0 +1,197 @@
+---
+title: "class 7: Machine Learning 1"
+author: "Aigerim (PID: 09919142)"
+format: pdf
+---
+
+Exploring some machine learning methods. Namely clustering and dimensionality reduction approches. 
+
+
+# Kmeans clustering
+
+The main function for k - means in "base" R is called `kmeans()`. Let's make first up some data to see kmen=ans works and to get at the results.
+
+```{r}
+rnorm(5)
+```
+
+```{r}
+hist(rnorm(50000))
+```
+
+
+```{r}
+hist(rnorm(50000, mean=3))
+```
+
+
+Make a wee vector with 60 total points have centered at +3 and half centered -3.
+
+```{r}
+tmp <- c( rnorm(30, mean=3), rnorm(30, mean=-3))
+tmp
+```
+
+```{r}
+rev(1:5)
+```
+
+```{r}
+rev(tmp)
+```
+
+```{r}
+x <- cbind( x=tmp, y=rev(tmp)) 
+x
+```
+
+
+
+```{r}
+x <- cbind( x=tmp, y=rev(tmp)) 
+plot(x)
+```
+
+Run `kmeans()` asking for two clusters: 
+
+```{r}
+k <- kmeans(x, centers=2, nstart=20)
+k
+```
+
+What is in this result object?
+
+```{r}
+attributes(k)
+```
+What is cluster center?
+
+```{r}
+k$centers
+```
+
+What is my clustering results? I.E. what cluster  does each point rside in?
+
+```{r}
+k$cluster
+```
+
+>Q. Plot your data `x` showing your clustering result and the center point for each cluster? 
+
+```{r}
+plot(x, col = c(2,4))
+```
+Center is shown as green dot 
+
+```{r}
+plot(x, col = k$cluster)
+points(k$centers, pch=15, col="green")
+```
+
+
+> Q. Run kmeans and cluster into 3 grps and plot the result?
+
+```{r}
+k3 <- kmeans(x, centers = 3)
+plot(x, col=k3$cluster)
+```
+
+```{r}
+k$tot.withinss
+k3$tot.withinss
+```
+
+The big limitation of kmeans is that it imposes a  structure on your data(i.e.clustering) that you ask for in the first place.
+
+
+
+#Hierarchical Clustering
+
+The main function in "base" R for this is called `hlcust()`. It wants a distance matrix as input not the data itself. 
+We can calculate a distance matrix in lots of different ways but here we will use the `dist()` function.
+
+```{r}
+d <- dist(x)
+hc <- hclust(d)
+hc
+```
+
+
+There is a specific plot method for hclust
+
+```{r}
+plot(hc)
+abline(h=9, col="red")
+```
+
+To get the cluster membership vector we read to "cut" the tree at a given height that we pick. The function to do this is called `cutree()`.
+
+```{r}
+cutree(hc, h=9)
+```
+
+```{r}
+cutree(hc, k=4)
+```
+
+
+```{r}
+grps <- cutree(hc, k=2)
+grps
+```
+
+> Q. Plot our data (`x`) colored by our hclust result.
+
+```{r}
+plot(x, col = grps)
+```
+
+
+#Principal Component Analysis (PCA)
+
+We will start PCA of tiny tiny dataset and make fun of stuff Barry eats.
+
+```{r}
+url <- "https://tinyurl.com/UK-foods"
+x <- read.csv(url, row.names = 1)
+x
+```
+
+
+One useful plot in this case (because we only have 4 countries to look across) is so called pairs plot
+
+```{r}
+pairs(x, col=rainbow(10), pch=16)
+```
+
+## Enter PCA 
+
+The main function to do PCA in "base" R is called `prcomp()`.
+
+It wants our foods as the columns and the countries as rows. It basecally wants the tranpoose pf the data we have
+
+```{r}
+pca <- prcomp(t(x))
+summary(pca)
+```
+
+```{r}
+attributes(pca)
+```
+
+```{r}
+pca$x
+```
+
+```{r}
+pca$rotation
+```
+
+
+```{r}
+plot(pca$x[,1], pca$x[,2], xlab = "PC1(67.4%)", ylab="PC2(29%)",
+     col=c("orange", "red", "blue", "darkgreen"), pch=15)
+abline(h=0, col="grey", lty=2)
+abline(h=0, col="grey", lty=2)
+```
+
