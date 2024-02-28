@@ -1,0 +1,273 @@
+---
+title: "class 10: Structural Bioinformatics (part 1)"
+author: "Aigerim (PID: 09919142)"
+format: pdf
+---
+
+
+# What is in the PDB?
+
+Downloaded a CSV file with current composition data form: https://www.rcsb.org/stats/summary
+
+```{r}
+pdbstats <- read.csv("Data Export Summary.csv", row.names = 1)
+head(pdbstats)
+```
+
+
+```{r}
+pdbstats$X.ray
+```
+
+```{r}
+x <- "2,2222"
+as.numeric(x)
+```
+
+```{r}
+as.numeric(pdbstats$X.ray)
+```
+`gsub()` function is used to remove comma in numbers, because it can not read as a number by program.
+
+```{r}
+x <- "2,222"
+as.numeric(gsub(",", "",x))
+```
+
+```{r}
+commasum <- function(x) {
+  #Remove comma, convert to numeric and sum
+  sum(as.numeric(gsub(",","",x)))
+}
+```
+
+```{r}
+#Code -> Extract function and here we can use it as a function
+commasum(pdbstats$X.ray)
+```
+
+`apply()` can use this function to my wee tablet to get all the number i get
+
+```{r}
+round(apply(pdbstats, 2, commasum) / 
+  commasum(pdbstats$Total) * 100, 2)
+```
+
+>Q1: What percentage of structures in the PDB are solved by X-Ray and Electron Microscopy.
+
+X.ray: 84.54 %;           
+EM:    8.72 %.        
+
+>Q2: What proportion of structures in the PDB are protein?
+
+According to PDB data, the Total count of "protein only" structures is 186898, and the sum of all elements is 215684. To calculate proportion of structures with only proteins, we divide and multiply to 100: 86.69 %
+
+```{r}
+186989/215684 * 100
+```
+
+>Q. How does the total number of protein strutures in the PDB relate to the toral number of protein sequences in UniProt?
+
+```{r}
+186898 / 250322721 * 100
+```
+>Q3: Type HIV in the PDB website search box on the home page and determine how many HIV-1 protease structures are in the current PDB?
+
+26,204 Structures
+
+## Visualizing the HIV-1 protease structure
+
+>Q4: Water molecules normally have 3 atoms. Why do we see just one atom per water molecule in this structure?
+
+Just like amino acids, water molecules usually have 3 atoms—2 hydrogen and 1 oxygen. But when we look at pictures of proteins, we often see water represented by just one dot. This is to make things easier to understand and not make the picture too crowded.
+
+>Q5: There is a critical “conserved” water molecule in the binding site. Can you identify this water molecule? What residue number does this water molecule have
+
+Conserved water molecules in protein binding sites can play critical roles in maintaining the structural integrity and function of the protein. In this case it is ASP 25.
+
+
+#We will use the Mol* (mol-star) viewer at:
+https://molstar.org/viewer/
+
+A first image
+
+![First image](1HSG.png)
+
+>Q6: Generate and save a figure clearly showing the two distinct chains of HIV-protease along with the ligand. You might also consider showing the catalytic residues ASP 25 in each chain and the critical water (we recommend “Ball & Stick” for these side-chains). Add this figure to your Quarto document.
+
+
+![A nice display showing the MK1 ligand and all important ASP 25](1HSG V2.png)
+
+**Discussion Topic:** Can you think of a way in which indinavir, or even larger ligands and substrates, could enter the binding site?
+
+Indinavir is a protease inhibitor used in the treatment of HIV. Probably because of Water molecules that can act as mediators for ligand entry. When there are water filled channels, ligands may enter and displace water molecules.
+
+
+
+## Working with structures in R
+
+We will use the bio3d package for structural bioinformatics
+
+```{r}
+library(bio3d)
+
+hiv <- read.pdb("1hsg")
+hiv
+```
+
+>Q7: How many amino acid residues are there in this pdb object? 
+
+residues/Calpha atoms#: 198
+
+
+>Q8: Name one of the two non-protein residues? 
+
+Water H2O
+
+>Q9: How many protein chains are in this structure? 
+
+2: A, B.
+
+
+```{r}
+head(hiv$atom)
+```
+
+
+```{r}
+aa123(pdbseq(hiv)[25])
+```
+
+#Predicting functional motions of a single structure
+
+```{r}
+adk <- read.pdb("6s36")
+adk
+```
+
+Normal mode analysis (NMA) a bioinformatics method to predict functional motions and large scale changes.
+ 
+```{r}
+m <- nma(adk) 
+plot(m)
+```
+
+Make a wee movie (aka "trajectory") of these predicted motions
+
+```{r}
+mktrj(m, file="adk_movie.pdb")
+```
+
+
+#Quick comparitive 
+
+Extract sequence and run a BLAST search
+
+```{r}
+s <- pdbseq(adk)
+blast <- blast.pdb(s)
+plot(blast)
+```
+
+
+Get the results from BLAST and download all the top hits.
+
+```{r}
+```
+
+
+```{r}
+hits <- plot(blast)
+```
+```{r}
+hits$pdb.id
+```
+
+```{r}
+# Download releated PDB files
+files <- get.pdb(hits$pdb.id, path="pdbs", split=TRUE, gzip=TRUE)
+```
+
+
+```{r}
+# Align releated PDBs
+pdbs <- pdbaln(files, fit = TRUE, exefile="msa")
+```
+
+
+##Principal component analysis
+With these all PDB files
+
+```{r}
+# Perform PCA
+pc.xray <- pca(pdbs)
+plot(pc.xray)
+```
+
+```{r}
+# Calculate RMSD
+rd <- rmsd(pdbs)
+
+# Structure-based clustering
+hc.rd <- hclust(dist(rd))
+grps.rd <- cutree(hc.rd, k=3)
+
+plot(pc.xray, 1:2, col="grey50", bg=grps.rd, pch=21, cex=1)
+```
+
+
+```{r}
+mktrj(pc.xray)
+```
+
+
+>Q10. Which of the packages above is found only on BioConductor and not CRAN? 
+
+BiocManager::install("msa")
+
+>Q11. Which of the above packages is not found on BioConductor or CRAN?: 
+
+"devtools" package itself is not hosted on CRAN or Bioconductor, it is available on GitHub, and can be installed like:
+install.packages("devtools")
+
+>Q12. True or False? Functions from the devtools package can be used to install packages from GitHub and BitBucket? 
+
+TRUE
+
+>Q13. How many amino acids are in this sequence, i.e. how long is this sequence?
+
+214
+
+
+```{r}
+ids <- paste("ID", 1:17, sep = "")
+```
+
+
+
+```{r}
+#Plotting results with ggplot2
+library(ggplot2)
+library(ggrepel)
+
+df <- data.frame(PC1=pc.xray$z[,1], 
+                 PC2=pc.xray$z[,2], 
+                 col=as.factor(grps.rd),
+                 ids=ids)
+
+p <- ggplot(df) + 
+  aes(PC1, PC2, col=col, label=ids) +
+  geom_point(size=2) +
+  geom_text_repel(max.overlaps = 20) +
+  theme(legend.position = "none")
+p
+```
+
+
+
+
+
+
+
+
+
