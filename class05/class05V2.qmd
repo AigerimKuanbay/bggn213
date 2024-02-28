@@ -1,0 +1,11 @@
+---
+title: "class05V2"
+author: "Aigerim"
+format: pdf
+---
+
+
+```{r}
+plot(cars)
+```
+
