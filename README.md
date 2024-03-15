@@ -3,7 +3,7 @@ My classwork for Winter 2024 at UC San Diego [BGGN213 at UC San Diego](https://b
 
 ## Contents
 
-- Class 5: [Data Viz with ggplot](https://github.com/AigerimKuanbay/bggn213/blob/main/class05/class05V2.pdf)
+- Class 5: [Data Viz with ggplot](https://github.com/AigerimKuanbay/bggn213/blob/main/class05/class05.pdf)
 
 - Class 6: [Functions]()
 
