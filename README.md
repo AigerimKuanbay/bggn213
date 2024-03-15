@@ -9,4 +9,4 @@ My classwork for Winter 2024 at UC San Diego [BGGN213 at UC San Diego](https://b
 
 - Class 7: [Machine learning 1](https://github.com/AigerimKuanbay/bggn213/blob/main/class07/class07.pdf)
 
-- Class: [Unsupervised learning mini-project]()
+- Class: [Breast Cancer Mini Project](https://github.com/AigerimKuanbay/bggn213/blob/main/class08/class08.pdf)
