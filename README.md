@@ -7,6 +7,6 @@ My classwork for Winter 2024 at UC San Diego [BGGN213 at UC San Diego](https://b
 
 - Class 6: [Functions](https://github.com/AigerimKuanbay/bggn213/blob/main/class06/class06.pdf)
 
-- Class 7: [Machine learning 1]()
+- Class 7: [Machine learning 1](https://github.com/AigerimKuanbay/bggn213/blob/main/class07/class07.pdf)
 
 - Class: [Unsupervised learning mini-project]()
