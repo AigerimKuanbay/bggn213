@@ -8,7 +8,7 @@ My classwork for Winter 2024 at UC San Diego [BGGN213 at UC San Diego](https://b
 - Class 7: [Machine learning 1](https://github.com/AigerimKuanbay/bggn213/blob/main/class07/class07.md)
 - Class 8: [Breast Cancer Mini Project](https://github.com/AigerimKuanbay/bggn213/blob/main/class08/class08.md)
 - Class 9: [Halloween Mini-Project](https://github.com/AigerimKuanbay/bggn213/blob/main/class09/class09.md)
-- Class 10: [Structural Bioinformatics (part 1)]()
+- Class 10: [Structural Bioinformatics (part 1)](https://github.com/AigerimKuanbay/bggn213/blob/main/class10/class10.md)
 - Class 11: []()
 - Class 12: []()
 - Class 13: []()
