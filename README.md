@@ -12,3 +12,15 @@ My classwork for Winter 2024 at UC San Diego [BGGN213 at UC San Diego](https://b
 - Class 8: [Breast Cancer Mini Project](https://github.com/AigerimKuanbay/bggn213/blob/main/class08/class08.md)
 
 - Class 9: [Halloween Mini-Project](https://github.com/AigerimKuanbay/bggn213/blob/main/class09/class09.md)
+
+- Class 10: []()
+
+- Class 11: []()
+
+- Class 12: []()
+
+- Class 13: []()
+
+- Class 14: []()
+
+- C
