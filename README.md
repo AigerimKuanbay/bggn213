@@ -13,7 +13,7 @@ My classwork for Winter 2024 at UC San Diego [BGGN213 at UC San Diego](https://b
 
 - Class 9: [Halloween Mini-Project](https://github.com/AigerimKuanbay/bggn213/blob/main/class09/class09.md)
 
-- Class 10: []()
+- Class 10: [Structural Bioinformatics (part 1)]()
 
 - Class 11: []()
 
