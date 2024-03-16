@@ -11,5 +11,5 @@ My classwork for Winter 2024 at UC San Diego [BGGN213 at UC San Diego](https://b
 - Class 10: [Structural Bioinformatics (part 1)](https://github.com/AigerimKuanbay/bggn213/blob/main/class10/class10.md)
 - Class 11: [AlphaFold](https://github.com/AigerimKuanbay/bggn213/blob/main/class11V3/class11.md)
 - Class 12: [Genome informatics and high throughput sequencing review](https://github.com/AigerimKuanbay/bggn213/blob/main/class12/class12HW.md)
-- Class 13: []()
+- Class 13: [Transcriptomics and the analysis of RNA-Seq data](https://github.com/AigerimKuanbay/bggn213/blob/main/class13V2/class13V2.md)
 - Class 14: []()
